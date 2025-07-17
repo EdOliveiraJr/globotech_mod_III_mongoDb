@@ -7,7 +7,7 @@ conexao = mg.MongoClient("mongodb://localhost:27017/")
 print("Bancos de dados disponíveis:")
 lista_dbs = conexao.list_database_names()
 for db in lista_dbs:
-    print('-', db)
+    print("-", db)
 print()
 
 # Exercício 2 - Criação de banco e coleção
@@ -72,20 +72,17 @@ for cliente in todos_cliente_mais_duas_compras:
 print()
 
 # Exercício 8 - Atualização
-# Atualize o número de compras do cliente 'Fernanda Dias' para 3.    
-collection_clientes.update_one(
-    {"nome": "Fernanda Dias"},
-    {"$set": {"compras": 3}}
-)
+# Atualize o número de compras do cliente 'Fernanda Dias' para 3.
+collection_clientes.update_one({"nome": "Fernanda Dias"}, {"$set": {"compras": 3}})
 
-print('Cliente Fernanda Dias atualizada')
+print("Cliente Fernanda Dias atualizada")
 print(collection_clientes.find_one({"nome": "Fernanda Dias"}))
 print()
 
 # Exercício 9 - Remoção
 # Remova o cliente com o nome 'Carlos Lima'.
-collection_clientes.delete_one({"nome":"Carlos Lima"})
-print('Cliente Carlos Lima removido')
+collection_clientes.delete_one({"nome": "Carlos Lima"})
+print("Cliente Carlos Lima removido")
 print(collection_clientes.find_one({"nome": "Carlos Lima"}))
 print()
 
@@ -93,24 +90,32 @@ print()
 # Exercício 10 - Desafio bônus
 # Crie uma nova coleção chamada 'produtos', insira 3 documentos com os campos: nome, categoria, preco,estoque.
 # Depois, exiba todos os produtos da categoria 'eletrônicos' cujo preço seja maior que R$ 100.
-collection_produtos = db['produtos']
+collection_produtos = db["produtos"]
 
 lista_produtos = [
-    {'nome': 'notebook', 'categoria': 'eletrônicos', 'preco': 3299.90, 'estoque': 10},
-    {'nome': 'mp4', 'categoria': 'eletrônicos', 'preco': 99.90, 'estoque': 100},
-    {'nome': 'caderno', 'categoria': 'papelaria', 'preco': 21.50, 'estoque': 150},
-    {'nome': 'geladeira', 'categoria': 'eletrodomésticos', 'preco': 2599.90, 'estoque': 5}
+    {"nome": "notebook", "categoria": "eletrônicos", "preco": 3299.90, "estoque": 10},
+    {"nome": "mp4", "categoria": "eletrônicos", "preco": 99.90, "estoque": 100},
+    {"nome": "caderno", "categoria": "papelaria", "preco": 21.50, "estoque": 150},
+    {
+        "nome": "geladeira",
+        "categoria": "eletrodomésticos",
+        "preco": 2599.90,
+        "estoque": 5,
+    },
 ]
 
 collection_produtos.insert_many(lista_produtos)
 
-eletronicos_mais_que_100 = collection_produtos.find({ 'categoria': 'eletrônicos' ,'preco': {'$gt': 100.00}})
+eletronicos_mais_que_100 = collection_produtos.find(
+    {"categoria": "eletrônicos", "preco": {"$gt": 100.00}}
+)
 
-print('Produtos eletrônicos com preço maior que R$ 100.00')
+print("Produtos eletrônicos com preço maior que R$ 100.00")
 for eletronico in eletronicos_mais_que_100:
     print(eletronico)
 print()
 
-db.drop_collection('clientes')
-db.drop_collection('produtos')
+db.drop_collection("clientes")
+db.drop_collection("produtos")
 conexao.close()
+
